@@ -41,7 +41,26 @@ final class BookSearcherViewController: UIViewController {
         return tableView
     }()
 
-    private var book: Book?
+    private lazy var titleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Please, enter your book name on search bar."
+        label.font = .systemFont(ofSize: 22, weight: .semibold)
+        label.numberOfLines = 0
+        label.textColor = .lightGray
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+
+    private var book: Book? {
+        didSet {
+            guard let _ = book else {
+                titleLabel.isHidden = false
+                return
+            }
+            titleLabel.isHidden = true
+        }
+    }
 
     // MARK: - Life cycle
     override func loadView() {
@@ -102,14 +121,20 @@ extension BookSearcherViewController: UITableViewDelegate {
         return 100
     }
 
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(
+        _ tableView: UITableView,
+        didSelectRowAt indexPath: IndexPath
+    ) {
 
     }
 }
 
 // MARK: - UISearchBarDelegate
 extension BookSearcherViewController: UISearchBarDelegate {
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+    func searchBar(
+        _ searchBar: UISearchBar,
+        textDidChange searchText: String
+    ) {
         let urlString = "https://www.googleapis.com/books/v1/volumes?q=\(searchText)"
         presenter?.getBooksFrom(urlString: urlString)
     }
@@ -145,6 +170,7 @@ private extension BookSearcherViewController {
     func layout() {
         layoutSearchBar()
         layoutBooksTableView()
+        layoutTitleLabel()
     }
 
     func layoutSearchBar() {
@@ -180,6 +206,26 @@ private extension BookSearcherViewController {
             ),
             booksTableView.bottomAnchor.constraint(
                 equalTo: view.bottomAnchor
+            )
+        ])
+    }
+
+    func layoutTitleLabel() {
+        view.addSubview(titleLabel)
+        NSLayoutConstraint.activate([
+            titleLabel.centerXAnchor.constraint(
+                equalTo: view.centerXAnchor
+            ),
+            titleLabel.leadingAnchor.constraint(
+                equalTo: view.leadingAnchor,
+                constant: 16
+            ),
+            titleLabel.trailingAnchor.constraint(
+                equalTo: view.trailingAnchor,
+                constant: -16
+            ),
+            titleLabel.centerYAnchor.constraint(
+                equalTo: view.centerYAnchor
             )
         ])
     }
