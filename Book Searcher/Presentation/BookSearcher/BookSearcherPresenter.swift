@@ -12,6 +12,10 @@ protocol BookSearcherPresentationLogic: AnyObject {
     /// Successfully received book from server
     /// - Parameter book: book
     func successfullyReceived(book: Book)
+
+    /// Open book details view controller
+    /// - Parameter item: book info
+    func openBookDetails(book: Item)
 }
 
 /// Presenter logic for handling event of View Controller
@@ -42,5 +46,11 @@ extension BookSearcherPresenter: BookSearcherPresentationLogic {
     /// - Parameter book: book
     func successfullyReceived(book: Book) {
         view?.successfullyReceived(book: book)
+    }
+
+    /// Open book details view controller
+    /// - Parameter item: book info
+    func openBookDetails(book: Item) {
+        router?.routeTo(target: .bookDetails(book))
     }
 }

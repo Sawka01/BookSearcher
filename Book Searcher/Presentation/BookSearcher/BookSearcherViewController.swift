@@ -125,7 +125,8 @@ extension BookSearcherViewController: UITableViewDelegate {
         _ tableView: UITableView,
         didSelectRowAt indexPath: IndexPath
     ) {
-
+        guard let item = book?.items[indexPath.row] else { return }
+        presenter?.openBookDetails(book: item)
     }
 }
 

@@ -7,14 +7,24 @@
 
 import UIKit
 
+/// Protocol of router logic
 protocol BookSearcherRouterProtocol {
-
+    /// Route to book details view controller
+    /// - Parameter target: target
+    func routeTo(target: BookSearcherRouter.Targets)
 }
 
-final class BookSearcherRouter {
-    
-}
+/// Router of Book Searcher module
+final class BookSearcherRouter: BookSearcherRouterProtocol {
 
-extension BookSearcherRouter: BookSearcherRouterProtocol {
-    
+    enum Targets {
+        case bookDetails(Item)
+    }
+
+    func routeTo(target: BookSearcherRouter.Targets) {
+        switch target {
+        case .bookDetails(let book):
+            print(book)
+        }
+    }
 }
