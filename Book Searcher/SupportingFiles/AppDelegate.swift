@@ -16,10 +16,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         window = UIWindow()
         let bookSeracherViewController = BookSearcherViewController()
-        BookSearcherConfigurator().configure(with: bookSeracherViewController)
         let navigationController = UINavigationController(
             rootViewController: bookSeracherViewController
         )
+        BookSearcherConfigurator().configure(with: bookSeracherViewController, navigationController: navigationController)
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
 

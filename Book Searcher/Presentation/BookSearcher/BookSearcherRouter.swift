@@ -17,6 +17,12 @@ protocol BookSearcherRouterProtocol {
 /// Router of Book Searcher module
 final class BookSearcherRouter: BookSearcherRouterProtocol {
 
+    private var navigationController: UINavigationController?
+
+    init(navigationController: UINavigationController?) {
+        self.navigationController = navigationController
+    }
+
     enum Targets {
         case bookDetails(Item)
     }
@@ -24,7 +30,15 @@ final class BookSearcherRouter: BookSearcherRouterProtocol {
     func routeTo(target: BookSearcherRouter.Targets) {
         switch target {
         case .bookDetails(let book):
-            print(book)
+            let bookDetailsViewController = BookDetailsViewController()
+            BookDetailsConfigurator(book: book).configure(
+                with: bookDetailsViewController,
+                navigationController: navigationController
+            )
+            navigationController?.pushViewController(
+                bookDetailsViewController,
+                animated: true
+            )
         }
     }
 }

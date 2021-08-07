@@ -7,23 +7,19 @@
 
 import UIKit
 
-/// Basic scene configuration protocol
-protocol BookSearcherConfiguratorProtocol {
-    /// Scene configuration method
-    /// - Parameter viewController: view controller object
-    func configure(with viewController: UIViewController)
-}
-
 /// Configurator of Book Searcher module
-final class BookSearcherConfigurator: BookSearcherConfiguratorProtocol {
-    func configure(with viewController: UIViewController) {
+final class BookSearcherConfigurator: BaseConfiguratorProtocol {
+    func configure(
+        with viewController: UIViewController,
+        navigationController: UINavigationController?
+    ) {
         guard
             let viewController = viewController as? BookSearcherViewController
         else { return }
 
         let presenter = BookSearcherPresenter()
         let interactor = BookSearcherInteractor()
-        let router = BookSearcherRouter()
+        let router = BookSearcherRouter(navigationController: navigationController)
 
         interactor.presenter = presenter
         viewController.presenter = presenter

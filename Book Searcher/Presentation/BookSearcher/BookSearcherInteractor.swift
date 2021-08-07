@@ -34,6 +34,7 @@ extension BookSearcherInteractor: BookSearcherInteractorProtocol {
             case .success(let book):
                 self.presenter?.successfullyReceived(book: book)
             case .failure(let error):
+                // TODO: Handle error
                 print(error)
             }
         }
