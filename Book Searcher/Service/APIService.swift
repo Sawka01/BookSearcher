@@ -33,23 +33,23 @@ final class APIService: APIServiceProtocol {
     {
         guard let url = URL(string: urlString) else { return }
 
-        URLSession.shared.dataTask(with: url) { (data, _, error) in
+        URLSession.shared.dataTask(with: url) { (data, response, error) in
             if let error = error {
                 completion(.failure(error))
-                return
-            }
-
-            guard let data = data else { return }
-
-            do {
-                let book = try JSONDecoder().decode(Book.self, from: data)
-                DispatchQueue.main.async {
-                    completion(.success(book))
+            } else if
+                let data = data,
+                let response = response as? HTTPURLResponse,
+                response.statusCode == 200
+            {
+                do {
+                    let book = try JSONDecoder().decode(Book.self, from: data)
+                    DispatchQueue.main.async {
+                        completion(.success(book))
+                    }
+                } catch let error {
+                    completion(.failure(error))
                 }
-            } catch let error {
-                completion(.failure(error))
             }
-
         }.resume()
     }
 }
