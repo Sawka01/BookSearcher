@@ -6,9 +6,12 @@
 //
 
 import UIKit
+import Kingfisher
 
 /// Interactor business logic
-protocol BookDetailsInteractorProtocol {}
+protocol BookDetailsInteractorProtocol {
+    func getBookDetails()
+}
 
 /// Interactor of Book Details module
 final class BookDetailsInteractor {
@@ -19,4 +22,25 @@ final class BookDetailsInteractor {
 }
 
 // MARK: - BookDetailsInteractorProtocol
-extension BookDetailsInteractor: BookDetailsInteractorProtocol {}
+extension BookDetailsInteractor: BookDetailsInteractorProtocol {
+    func getBookDetails() {
+        guard
+            let urlString = book?.volumeInfo.imageLinks.thumbnail
+        else { return }
+        guard let url = URL(string: urlString) else { return }
+        KingfisherManager.shared.downloader.downloadImage(
+            with: url
+        ) { [weak self] (result) in
+            guard let self = self else { return }
+            switch result {
+            case .success(let data):
+                self.presenter?.successfullyDownloaded(image: data.image)
+            case .failure(let error):
+                // TODO: Hande error
+                print(error)
+            }
+        }
+
+        presenter?.getBook(book)
+    }
+}

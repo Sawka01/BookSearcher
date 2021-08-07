@@ -15,6 +15,7 @@ final class BookDetailsConfigurator {
     }
 }
 
+// MARK: - BaseConfiguratorProtocol
 extension BookDetailsConfigurator: BaseConfiguratorProtocol {
     func configure(
         with viewController: UIViewController,

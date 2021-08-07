@@ -8,10 +8,15 @@
 import UIKit
 
 /// Presentation Logic
-protocol BookDetailsPresentationLogic: AnyObject {}
+protocol BookDetailsPresentationLogic: AnyObject {
+    func successfullyDownloaded(image: UIImage)
+    func getBook(_ book: Item?)
+}
 
 /// Presenter logic for handling event of View Controller
-protocol BookDetailsViewOutput {}
+protocol BookDetailsViewOutput {
+    func getBookDetails()
+}
 
 final class BookDetailsPresenter {
     weak var view: BookDetailsProtocol?
@@ -20,7 +25,19 @@ final class BookDetailsPresenter {
 }
 
 // MARK: - BookDetailsViewOutput
-extension BookDetailsPresenter: BookDetailsViewOutput {}
+extension BookDetailsPresenter: BookDetailsViewOutput {
+    func getBookDetails() {
+        interactor?.getBookDetails()
+    }
+}
 
 // MARK: - BookDetailsPresentationLogic
-extension BookDetailsPresenter: BookDetailsPresentationLogic {}
+extension BookDetailsPresenter: BookDetailsPresentationLogic {
+    func successfullyDownloaded(image: UIImage) {
+        view?.updateBookImageView(with: image)
+    }
+
+    func getBook(_ book: Item?) {
+        view?.getBook(book)
+    }
+}

@@ -18,13 +18,10 @@ struct Item: Decodable {
 struct VolumeInfo: Decodable {
     let title: String
     let authors: [String]
-    let averageRating: Double?
-    let ratingsCount: Int?
     let imageLinks: ImageLinks
-    let subtitle: String?
+    let description: String
 }
 
 struct ImageLinks: Decodable {
-    let smallThumbnail: String
     let thumbnail: String
 }
