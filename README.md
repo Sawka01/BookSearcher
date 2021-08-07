@@ -4,9 +4,9 @@
 
 * **Data** request occurs from the server using the JSON data parsing.
 
-* **The interface** is created in 100% through code.
+* **The interface** is created 100% through code.
 
-* **Kingfisher** to download images from server.
+* **Kingfisher** to download images from the server.
 
 * **The project** follows the VIPER architecture.
 
