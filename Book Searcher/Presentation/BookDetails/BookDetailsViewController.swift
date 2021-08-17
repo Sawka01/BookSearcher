@@ -16,7 +16,7 @@ protocol BookDetailsProtocol: AnyObject {
 final class BookDetailsViewController: UIViewController {
 
     /// Link to presentation layer
-    var presenter: BookDetailsPresenter?
+    var presenter: BookDetailsViewOutput?
 
     // MARK: - Private Properties
     private lazy var backgroundView: UIView = {

@@ -20,7 +20,7 @@ final class BookSearcherViewController: UIViewController {
     // MARK: - Public Properties
 
     /// Link to presentation layer
-    var presenter: BookSearcherPresenter?
+    var presenter: BookSearcherViewOutput?
 
     // MARK: - Private Properties
     private lazy var searchBar: UISearchBar = {
@@ -159,10 +159,8 @@ extension BookSearcherViewController: BookSearcherProtocol {
     /// Successfully received book from server
     /// - Parameter book: book
     func successfullyReceived(book: Book) {
-        DispatchQueue.main.async {
-            self.book = book
-            self.booksTableView.reloadData()
-        }
+        self.book = book
+        self.booksTableView.reloadData()
     }
 }
 
